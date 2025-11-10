@@ -20,5 +20,17 @@ public class SpaceConfig : IEntityTypeConfiguration<Space>
 
 		builder.Property(x => x.IsActive)
 			.IsRequired();
+
+		// Multi-tenancy: Organization relationship
+		builder.Property(x => x.OrganizationId)
+			.IsRequired();
+
+		builder.HasOne(x => x.Organization)
+			.WithMany(x => x.Spaces)
+			.HasForeignKey(x => x.OrganizationId)
+			.OnDelete(DeleteBehavior.Restrict);
+
+		builder.HasIndex(x => x.OrganizationId)
+			.HasDatabaseName("IX_Space_OrganizationId");
 	}
 }

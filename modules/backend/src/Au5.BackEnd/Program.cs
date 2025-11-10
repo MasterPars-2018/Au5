@@ -63,6 +63,7 @@ var app = builder.Build();
 
 	app.UseAuthentication();
 	app.UseMiddleware<JwtBlacklistMiddleware>();
+	app.UseMiddleware<TenantResolutionMiddleware>();
 	app.UseAuthorization();
 
 	app.UseCors();

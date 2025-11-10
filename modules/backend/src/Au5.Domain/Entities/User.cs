@@ -1,9 +1,10 @@
 using System.Text.Json.Serialization;
+using Au5.Domain.Common;
 
 namespace Au5.Domain.Entities;
 
 [Entity]
-public class User
+public class User : ITenantEntity
 {
 	public Guid Id { get; set; }
 
@@ -27,6 +28,11 @@ public class User
 	public RoleTypes Role { get; set; }
 
 	public UserStatus Status { get; set; }
+
+	// Multi-tenancy: Every user belongs to exactly one organization
+	public Guid OrganizationId { get; set; }
+
+	public Organization Organization { get; set; }
 
 	public ICollection<Meeting> Meetings { get; set; }
 

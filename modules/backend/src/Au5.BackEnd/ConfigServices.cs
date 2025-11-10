@@ -18,6 +18,7 @@ public static class ConfigServices
 
 		services.AddHttpContextAccessor();
 		services.AddScoped<ICurrentUserService, CurrentUserService>();
+		services.AddScoped<ITenantProvider, TenantProvider>();
 
 		var jwtSettings = config.GetSection(JWTSETTING).Get<JwtSettings>();
 

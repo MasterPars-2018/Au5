@@ -1,9 +1,10 @@
 using System.ComponentModel.DataAnnotations.Schema;
+using Au5.Domain.Common;
 
 namespace Au5.Domain.Entities;
 
 [Entity]
-public class Meeting
+public class Meeting : ITenantEntity
 {
 	public Guid Id { get; set; }
 
@@ -35,6 +36,11 @@ public class Meeting
 	public MeetingStatus Status { get; set; }
 
 	public bool IsFavorite { get; set; }
+
+	// Multi-tenancy: Every meeting belongs to one organization
+	public Guid OrganizationId { get; set; }
+
+	public Organization Organization { get; set; }
 
 	public ICollection<ParticipantInMeeting> Participants { get; set; }
 

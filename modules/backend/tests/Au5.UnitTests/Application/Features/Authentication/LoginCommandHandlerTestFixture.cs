@@ -18,6 +18,7 @@ public class LoginCommandHandlerTestFixture
 	public LoginCommandHandlerTestFixture WithValidUser(string password = "secret")
 	{
 		var userId = Guid.NewGuid();
+		var organizationId = Guid.NewGuid();
 		TestUser = new User
 		{
 			Id = userId,
@@ -25,6 +26,7 @@ public class LoginCommandHandlerTestFixture
 			FullName = "Test User",
 			Password = HashHelper.HashPassword(password, userId),
 			IsActive = true,
+			OrganizationId = organizationId,
 		};
 
 		var dbSet = new List<User> { TestUser }.BuildMockDbSet();
@@ -36,6 +38,7 @@ public class LoginCommandHandlerTestFixture
 	public LoginCommandHandlerTestFixture WithNoActiveUsers(string password = "secret")
 	{
 		var userId = Guid.NewGuid();
+		var organizationId = Guid.NewGuid();
 		TestUser = new User
 		{
 			Id = userId,
@@ -43,6 +46,7 @@ public class LoginCommandHandlerTestFixture
 			FullName = "Test User",
 			Password = HashHelper.HashPassword(password, userId),
 			IsActive = false,
+			OrganizationId = organizationId,
 		};
 
 		var dbSet = new List<User> { TestUser }.BuildMockDbSet();
@@ -53,8 +57,8 @@ public class LoginCommandHandlerTestFixture
 
 	public LoginCommandHandlerTestFixture WithToken(string token = "fake-token")
 	{
-		MockTokenService.Setup(ts => ts.GenerateToken(It.IsAny<Guid>(), It.IsAny<string>(), It.IsAny<RoleTypes>()))
-						.Returns(new TokenResponse(token, 3600, string.Empty, "Bearer"));
+		MockTokenService.Setup(ts => ts.GenerateToken(It.IsAny<Guid>(), It.IsAny<string>(), It.IsAny<RoleTypes>(), It.IsAny<Guid>()))
+					.Returns(new TokenResponse(token, 3600, string.Empty, "Bearer"));
 		return this;
 	}
 

@@ -45,7 +45,7 @@ services:
     image: au5-botfather
     container_name: au5-botfather
     volumes:
-      - /run/podman/podman.sock:/var/run/docker.sock
+      - /var/run/docker.sock:/var/run/docker.sock
     depends_on:
       - backend
     ports:
@@ -62,7 +62,7 @@ services:
       - QDRANT_HOST=qdrant
       - QDRANT_PORT=6333
     env_file:
-      - ../aiEngine/.env
+      - ./aiEngine/.env
     ports:
       - "8000:8000"
     depends_on:

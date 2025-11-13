@@ -9,4 +9,5 @@ public static class ClaimConstants
 	public const string Role = ClaimTypes.Role;
 	public const string Jti = "jti";
 	public const string Exp = "exp";
+	public const string TenantId = "tenant_id";
 }

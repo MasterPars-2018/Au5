@@ -31,5 +31,17 @@ public class UserConfig : IEntityTypeConfiguration<User>
 
 		builder.Property(x => x.PictureUrl)
 			.HasMaxLength(250);
+
+		// Multi-tenancy: Organization relationship
+		builder.Property(x => x.OrganizationId)
+			.IsRequired();
+
+		builder.HasOne(x => x.Organization)
+			.WithMany(x => x.Users)
+			.HasForeignKey(x => x.OrganizationId)
+			.OnDelete(DeleteBehavior.Restrict);
+
+		builder.HasIndex(x => x.OrganizationId)
+			.HasDatabaseName("IX_User_OrganizationId");
 	}
 }

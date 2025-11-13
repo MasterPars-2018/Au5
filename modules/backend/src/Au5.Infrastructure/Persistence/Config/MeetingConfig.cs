@@ -25,5 +25,17 @@ public class MeetingConfig : IEntityTypeConfiguration<Meeting>
 		builder.Property(m => m.HashToken)
 			.IsUnicode(false)
 			.HasMaxLength(100);
+
+		// Multi-tenancy: Organization relationship
+		builder.Property(m => m.OrganizationId)
+			.IsRequired();
+
+		builder.HasOne(m => m.Organization)
+			.WithMany(o => o.Meetings)
+			.HasForeignKey(m => m.OrganizationId)
+			.OnDelete(DeleteBehavior.Restrict);
+
+		builder.HasIndex(m => m.OrganizationId)
+			.HasDatabaseName("IX_Meeting_OrganizationId");
 	}
 }

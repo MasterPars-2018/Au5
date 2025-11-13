@@ -26,6 +26,7 @@ public static class ModelBuilderExtension
 
 	public static void SeedData(this ModelBuilder builder)
 	{
+		SeedDefaultOrganization(builder);
 		SeedReactions(builder);
 		SeedMenus(builder);
 
@@ -62,6 +63,24 @@ public static class ModelBuilderExtension
 
 			modelBuilder.Entity<Menu>().HasData(menus);
 			modelBuilder.Entity<RoleMenu>().HasData(roleMenus);
+		}
+
+		static void SeedDefaultOrganization(ModelBuilder modelBuilder)
+		{
+			// Seed a default organization for initial setup
+			// This organization will be used during the first-time setup process
+			var defaultOrgId = new Guid("00000000-0000-0000-0000-000000000001");
+
+			modelBuilder.Entity<Organization>().HasData(
+				new Organization
+				{
+					Id = defaultOrgId,
+					Name = "Default Organization",
+					Domain = null,
+					IsActive = true,
+					CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, DateTimeKind.Utc),
+					UpdatedAt = null
+				});
 		}
 	}
 }
